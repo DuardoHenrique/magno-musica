@@ -60,7 +60,7 @@ export const Loader = ({ isLoading, onComplete }) => {
         opacity: 0,
         y: -10,
         duration: 0.3,
-        delay: 0.7,
+        delay: i === 1 ? 2.5 : 1.0,
         onComplete: () => {
           setCurrentMessage(i);
           gsap.set(textRef.current, { y: 10 });
