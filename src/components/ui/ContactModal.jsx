@@ -24,10 +24,42 @@ export function ContactModal({ isOpen, onClose }) {
   const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') onClose();
+      
+      if (e.key === 'Tab' && isOpen) {
+        const focusableElements = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+        const modal = document.querySelector('[role="dialog"]');
+        if (!modal) return;
+        
+        const firstFocusableElement = modal.querySelectorAll(focusableElements)[0];
+        const focusableContent = modal.querySelectorAll(focusableElements);
+        const lastFocusableElement = focusableContent[focusableContent.length - 1];
+
+        if (e.shiftKey) {
+          if (document.activeElement === firstFocusableElement) {
+            lastFocusableElement.focus();
+            e.preventDefault();
+          }
+        } else {
+          if (document.activeElement === lastFocusableElement) {
+            firstFocusableElement.focus();
+            e.preventDefault();
+          }
+        }
+      }
+    };
+
     if (isOpen) {
       document.body.style.overflow = 'hidden';
+      window.addEventListener('keydown', handleKeyDown);
+      // Focus first input
+      setTimeout(() => {
+        document.getElementById('name')?.focus();
+      }, 100);
     } else {
       document.body.style.overflow = '';
+      window.removeEventListener('keydown', handleKeyDown);
       // Reset state when closing
       setTimeout(() => {
         setSubmitted(false);
@@ -39,8 +71,9 @@ export function ContactModal({ isOpen, onClose }) {
     }
     return () => {
       document.body.style.overflow = '';
+      window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [isOpen]);
+  }, [isOpen, onClose]);
 
   if (!isOpen) return null;
 
@@ -91,17 +124,24 @@ export function ContactModal({ isOpen, onClose }) {
       <div 
         className="absolute inset-0 bg-background/80 backdrop-blur-sm transition-opacity" 
         onClick={onClose}
+        aria-hidden="true"
       />
-      <div className="relative w-full max-w-lg bg-surface-elevated border border-white/10 rounded-2xl shadow-2xl p-6 md:p-8 transform transition-all duration-300">
+      <div 
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modal-title"
+        className="relative w-full max-w-lg bg-surface-elevated border border-white/10 rounded-2xl shadow-2xl p-6 md:p-8 transform transition-all duration-300"
+      >
         <button 
           onClick={onClose}
-          className="absolute right-4 top-4 text-text-muted hover:text-primary transition-colors"
+          aria-label="Fechar modal"
+          className="absolute right-4 top-4 text-text-muted hover:text-primary transition-colors focus-visible:ring-offset-surface-elevated"
         >
           <X size={24} />
         </button>
 
         {submitted ? (
-          <div className="text-center py-12 animate-zoomIn">
+          <div className="text-center py-12 animate-zoomIn" role="status" aria-live="polite">
             <div className="relative w-24 h-24 mx-auto mb-8">
               <div className="absolute inset-0 bg-primary/20 rounded-full animate-ping" />
               <div className="relative w-full h-full bg-primary/20 text-primary rounded-full flex items-center justify-center border border-primary/30">
@@ -110,7 +150,7 @@ export function ContactModal({ isOpen, onClose }) {
                 </svg>
               </div>
             </div>
-            <h3 className="text-3xl md:text-4xl font-display font-bold text-white mb-4 tracking-tight">
+            <h3 id="modal-title" className="text-3xl md:text-4xl font-display font-bold text-white mb-4 tracking-tight">
               Obrigado, <span className="text-primary">{name.split(' ')[0]}</span>!
             </h3>
             <p className="text-text-muted text-lg max-w-sm mx-auto leading-relaxed">
@@ -120,7 +160,7 @@ export function ContactModal({ isOpen, onClose }) {
         ) : (
           <>
             <div className="text-center mb-8">
-              <h3 className="text-3xl font-display font-bold text-white mb-2">Dar o primeiro passo</h3>
+              <h3 id="modal-title" className="text-3xl font-display font-bold text-white mb-2">Dar o primeiro passo</h3>
               <p className="text-text-muted">Preencha abaixo para falarmos no WhatsApp.</p>
             </div>
 
@@ -133,12 +173,14 @@ export function ContactModal({ isOpen, onClose }) {
                   value={name}
                   onChange={handleNameChange}
                   placeholder="Digite seu nome"
+                  aria-invalid={!!errors.name}
+                  aria-describedby={errors.name ? "name-error" : undefined}
                   className={cn(
                     "w-full bg-background border rounded-lg px-4 py-3 text-white placeholder:text-white/20 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all",
                     errors.name ? "border-red-500" : "border-white/10"
                   )}
                 />
-                {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
+                {errors.name && <p id="name-error" role="alert" className="text-red-500 text-xs mt-1">{errors.name}</p>}
               </div>
 
               <div className="space-y-2">
@@ -149,35 +191,41 @@ export function ContactModal({ isOpen, onClose }) {
                   value={whatsapp}
                   onChange={handleWhatsappChange}
                   placeholder="(99) 99999-9999"
+                  aria-invalid={!!errors.whatsapp}
+                  aria-describedby={errors.whatsapp ? "whatsapp-error" : undefined}
                   className={cn(
                     "w-full bg-background border rounded-lg px-4 py-3 text-white placeholder:text-white/20 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all",
                     errors.whatsapp ? "border-red-500" : "border-white/10"
                   )}
                 />
-                {errors.whatsapp && <p className="text-red-500 text-xs mt-1">{errors.whatsapp}</p>}
+                {errors.whatsapp && <p id="whatsapp-error" role="alert" className="text-red-500 text-xs mt-1">{errors.whatsapp}</p>}
               </div>
 
               <div className="space-y-2">
                 <label htmlFor="instrument" className="text-sm font-medium text-text-muted">Qual instrumento deseja aprender?</label>
-                <select
-                  id="instrument"
-                  value={instrument}
-                  onChange={(e) => {
-                    setInstrument(e.target.value);
-                    if (e.target.value) setErrors((prev) => ({ ...prev, instrument: null }));
-                  }}
-                  className={cn(
-                    "w-full bg-background border rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all appearance-none",
-                    errors.instrument ? "border-red-500" : "border-white/10"
-                  )}
-                  style={{ backgroundImage: 'url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23FFFFFF%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E")', backgroundRepeat: 'no-repeat', backgroundPosition: 'right 1rem top 50%', backgroundSize: '0.65rem auto' }}
-                >
-                  <option value="" disabled className="text-white/20">Selecione uma opção</option>
-                  {INSTRUMENTS.map((inst) => (
-                    <option key={inst} value={inst} className="bg-surface-elevated">{inst}</option>
-                  ))}
-                </select>
-                {errors.instrument && <p className="text-red-500 text-xs mt-1">{errors.instrument}</p>}
+                <div className="relative">
+                  <select
+                    id="instrument"
+                    value={instrument}
+                    onChange={(e) => {
+                      setInstrument(e.target.value);
+                      if (e.target.value) setErrors((prev) => ({ ...prev, instrument: null }));
+                    }}
+                    aria-invalid={!!errors.instrument}
+                    aria-describedby={errors.instrument ? "instrument-error" : undefined}
+                    className={cn(
+                      "w-full bg-background border rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all appearance-none",
+                      errors.instrument ? "border-red-500" : "border-white/10"
+                    )}
+                    style={{ backgroundImage: 'url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23FFFFFF%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E")', backgroundRepeat: 'no-repeat', backgroundPosition: 'right 1rem top 50%', backgroundSize: '0.65rem auto' }}
+                  >
+                    <option value="" disabled className="text-white/20">Selecione uma opção</option>
+                    {INSTRUMENTS.map((inst) => (
+                      <option key={inst} value={inst} className="bg-surface-elevated">{inst}</option>
+                    ))}
+                  </select>
+                </div>
+                {errors.instrument && <p id="instrument-error" role="alert" className="text-red-500 text-xs mt-1">{errors.instrument}</p>}
               </div>
 
               <Button type="submit" className="w-full h-12 text-lg mt-4">

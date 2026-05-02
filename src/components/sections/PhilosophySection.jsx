@@ -69,48 +69,83 @@ export function PhilosophySection() {
     }
 
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          pin: true,
-          anticipatePin: 1,
-          scrub: 0.5,
-          start: 'top top',
-          end: '+=400%', // 4 screens of scrolling duration
-        }
+      const mm = gsap.matchMedia();
+
+      mm.add("(prefers-reduced-motion: no-preference)", () => {
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            pin: true,
+            anticipatePin: 1,
+            scrub: 0.5,
+            start: 'top top',
+            end: '+=400%', // 4 screens of scrolling duration
+          }
+        });
+
+        // Animate the frames
+        tl.to(scrollObj, {
+          frame: frameCount - 1,
+          ease: 'none',
+          onUpdate: render,
+          duration: 1, // Normalized timeline duration
+        }, 0);
+
+        // Animate the texts
+        const stepDuration = 1 / COPY.philosophy.steps.length;
+        
+        textRefs.current.forEach((textRef, i) => {
+          const enterTime = i * stepDuration;
+          const leaveTime = enterTime + stepDuration * 0.7; // Fade out before next starts
+          
+          // Initial state
+          gsap.set(textRef, { autoAlpha: 0, y: 50 });
+
+          // Fade in
+          tl.to(textRef, 
+            { autoAlpha: 1, y: 0, duration: stepDuration * 0.2, ease: 'power2.out' },
+            enterTime
+          );
+          
+          // Fade out
+          tl.to(textRef, {
+            autoAlpha: 0,
+            y: -50,
+            duration: stepDuration * 0.2,
+            ease: 'power2.in'
+          }, leaveTime);
+        });
       });
 
-      // Animate the frames
-      tl.to(scrollObj, {
-        frame: frameCount - 1,
-        ease: 'none',
-        onUpdate: render,
-        duration: 1, // Normalized timeline duration
-      }, 0);
+      mm.add("(prefers-reduced-motion: reduce)", () => {
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            pin: true,
+            scrub: 0.5,
+            start: 'top top',
+            end: '+=400%',
+          }
+        });
 
-      // Animate the texts
-      const stepDuration = 1 / COPY.philosophy.steps.length;
-      
-      textRefs.current.forEach((textRef, i) => {
-        const enterTime = i * stepDuration;
-        const leaveTime = enterTime + stepDuration * 0.7; // Fade out before next starts
+        // Simple opacity fade without movement
+        const stepDuration = 1 / COPY.philosophy.steps.length;
+        textRefs.current.forEach((textRef, i) => {
+          const enterTime = i * stepDuration;
+          const leaveTime = enterTime + stepDuration * 0.7;
+          
+          gsap.set(textRef, { autoAlpha: 0, y: 0 });
+          tl.to(textRef, { autoAlpha: 1, duration: stepDuration * 0.2 }, enterTime);
+          tl.to(textRef, { autoAlpha: 0, duration: stepDuration * 0.2 }, leaveTime);
+        });
         
-        // Initial state
-        gsap.set(textRef, { autoAlpha: 0, y: 50 });
-
-        // Fade in
-        tl.to(textRef, 
-          { autoAlpha: 1, y: 0, duration: stepDuration * 0.2, ease: 'power2.out' },
-          enterTime
-        );
-        
-        // Fade out
-        tl.to(textRef, {
-          autoAlpha: 0,
-          y: -50,
-          duration: stepDuration * 0.2,
-          ease: 'power2.in'
-        }, leaveTime);
+        // Still animate frames but maybe slower/simpler if needed
+        tl.to(scrollObj, {
+          frame: frameCount - 1,
+          ease: 'none',
+          onUpdate: render,
+          duration: 1,
+        }, 0);
       });
 
     }, sectionRef);
@@ -122,6 +157,8 @@ export function PhilosophySection() {
     <section ref={sectionRef} className="h-screen bg-black overflow-hidden relative">
       <canvas 
         ref={canvasRef} 
+        role="img"
+        aria-label="Vídeo artístico em stop-motion mostrando a filosofia e metodologia de ensino do Professor Magno"
         className="w-full h-full object-cover opacity-60 mix-blend-screen"
       />
       

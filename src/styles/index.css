@@ -32,6 +32,29 @@
     /* Adicionando textura de ruído global via pseudo-elemento ou classe do tailwind (bg-noise) */
   }
 
+  /* Accessibility: Focus Styles */
+  :focus-visible {
+    @apply outline-none ring-2 ring-primary ring-offset-2 ring-offset-background;
+  }
+
+  /* Smooth scroll support for skip links and internal navigation */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    
+    *, ::before, ::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
   ::selection {
     background-color: rgba(245, 158, 11, 0.3);
     /* Primary (Amber 500) com 30% de opacidade */

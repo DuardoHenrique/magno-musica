@@ -16,7 +16,11 @@ export function Navbar({ onOpenContact }) {
     >
       <div className="container mx-auto px-4 md:px-8 flex items-center justify-between">
         {/* Logo */}
-        <a href="#" className="flex items-center gap-2 group">
+        <a 
+          href="#" 
+          aria-label="Magno Musica - Voltar ao topo"
+          className="flex items-center gap-2 group"
+        >
           <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-background font-bold text-xl transition-transform group-hover:scale-110">
             M
           </div>

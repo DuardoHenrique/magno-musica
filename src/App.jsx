@@ -21,8 +21,14 @@ function App() {
 
   return (
     <SmoothScrolling>
+      <a 
+        href="#main-content" 
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-primary focus:text-background focus:rounded-md focus:font-bold focus:shadow-2xl"
+      >
+        Pular para o conteúdo principal
+      </a>
       <Navbar onOpenContact={() => setIsContactOpen(true)} />
-      <main>
+      <main id="main-content">
         <HeroSection onOpenContact={() => setIsContactOpen(true)} />
         <CredibilitySection />
         <AudienceSection />
