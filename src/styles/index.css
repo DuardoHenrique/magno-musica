@@ -1,0 +1,107 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Midnight Luxe Palette */
+    --background: #0A0A0B;
+    --surface: #141416;
+    --surface-elevated: #1D1D20;
+
+    /* Golden / Amber warm accents for the stage light feel */
+    --primary: #F59E0B;
+    /* Amber 500 */
+    --primary-hover: #D97706;
+    /* Amber 600 */
+    --secondary: #27272A;
+    /* Zinc 800 */
+
+    /* Text */
+    --text: #F8FAFC;
+    /* Slate 50 */
+    --text-muted: #94A3B8;
+    /* Slate 400 */
+
+    --border: #27272A;
+    /* Zinc 800 */
+  }
+
+  body {
+    @apply bg-background text-text font-sans antialiased;
+    /* Adicionando textura de ruído global via pseudo-elemento ou classe do tailwind (bg-noise) */
+  }
+
+  ::selection {
+    background-color: rgba(245, 158, 11, 0.3);
+    /* Primary (Amber 500) com 30% de opacidade */
+    color: var(--primary);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-display tracking-tight;
+  }
+}
+
+@layer utilities {
+  .glass {
+    @apply backdrop-blur-md border border-white/5;
+    background-color: rgba(20, 20, 22, 0.6);
+  }
+
+  .text-glow {
+    text-shadow: 0 0 20px rgba(245, 158, 11, 0.3);
+  }
+
+  .box-glow {
+    box-shadow: 0 0 30px rgba(245, 158, 11, 0.1);
+  }
+
+  .box-glow-hover:hover {
+    box-shadow: 0 0 40px rgba(245, 158, 11, 0.2);
+  }
+
+  /* Custom Scrollbar for horizontal scrolling elements */
+  .custom-scrollbar::-webkit-scrollbar {
+    height: 6px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: rgba(39, 39, 42, 0.3);
+    border-radius: 4px;
+    margin: 0 10vw;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: var(--primary);
+    border-radius: 4px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-hover);
+  }
+
+  /* Global Scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--background);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--primary);
+    border-radius: 6px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-hover);
+  }
+}
