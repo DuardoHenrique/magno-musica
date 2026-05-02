@@ -17,15 +17,28 @@ export function CTASection({ onOpenContact }) {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
+      // Animação do container (sem scale para evitar blur)
       gsap.fromTo('.cta-content',
-        { opacity: 0, scale: 0.9, y: 30 },
+        { opacity: 0, y: 40 },
         { 
           opacity: 1, 
-          scale: 1, 
           y: 0, 
-          duration: 1, 
+          duration: 1.2, 
           ease: 'power3.out',
-          force3D: true,
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top 80%',
+          }
+        }
+      );
+
+      // Animação da imagem (o scale acontece aqui, de forma isolada)
+      gsap.fromTo('.cta-bg-image',
+        { scale: 1.1 },
+        { 
+          scale: 1, 
+          duration: 2, 
+          ease: 'power2.out',
           scrollTrigger: {
             trigger: sectionRef.current,
             start: 'top 80%',
@@ -45,9 +58,9 @@ export function CTASection({ onOpenContact }) {
           <img 
             src={ctaImage} 
             alt="Professor Magno Oliveira segurando instrumento em fundo premium" 
-            className="hidden md:block w-full h-full object-cover"
+            className="cta-bg-image hidden md:block w-full h-full object-cover"
             style={{ 
-              imageRendering: '-webkit-optimize-contrast',
+              imageRendering: 'high-quality',
               transform: 'translateZ(0)',
               backfaceVisibility: 'hidden'
             }}
@@ -55,9 +68,9 @@ export function CTASection({ onOpenContact }) {
           <img 
             src={ctaImageMobile} 
             alt="Professor Magno Oliveira segurando instrumento em fundo premium - versão mobile" 
-            className="block md:hidden w-full h-full object-cover"
+            className="cta-bg-image block md:hidden w-full h-full object-cover"
             style={{ 
-              imageRendering: '-webkit-optimize-contrast',
+              imageRendering: 'high-quality',
               transform: 'translateZ(0)',
               backfaceVisibility: 'hidden'
             }}
