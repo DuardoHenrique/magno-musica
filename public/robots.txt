@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Bloquear arquivos de sistema
+Disallow: /src/
+Disallow: /.env
+
+Sitemap: https://magnomusica.com.br/sitemap.xml

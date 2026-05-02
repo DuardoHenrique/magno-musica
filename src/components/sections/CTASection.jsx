@@ -37,12 +37,12 @@ export function CTASection({ onOpenContact }) {
         <div className="absolute inset-0 z-0">
           <img 
             src={ctaImage} 
-            alt="Background" 
+            alt="Professor Magno Oliveira segurando instrumento em fundo premium" 
             className="hidden md:block w-full h-full object-cover"
           />
           <img 
             src={ctaImageMobile} 
-            alt="Background Mobile" 
+            alt="Professor Magno Oliveira segurando instrumento em fundo premium - versão mobile" 
             className="block md:hidden w-full h-full object-cover"
           />
           {/* Gradiente apenas na direita para legibilidade da copy, esquerda nítida para o personagem */}

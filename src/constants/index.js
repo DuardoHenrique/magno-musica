@@ -6,6 +6,13 @@ import carrosel5 from '../assets/carrosel5.png';
 import carrosel6 from '../assets/carrosel6.png';
 
 export const COPY = {
+  meta: {
+    title: "Magno Musica | Aulas de Música Presenciais em Terra Boa",
+    description: "Aprenda violão, teclado, violino, canto e mais com o Prof. Magno Oliveira em Terra Boa, PR. Metodologia prática focada em repertório real para todas as idades.",
+    keywords: "aulas de música Terra Boa, professor de música Magno Oliveira, aprender violão Terra Boa, aulas de teclado, aulas de violino, teoria musical, técnica vocal PR",
+    url: "https://magnomusica.com.br", // Placeholder
+    themeColor: "#EAB308", // Primary gold
+  },
   hero: {
     headline: "O seu primeiro acorde encontra a prática de palco.",
     subheadline: "Aulas de múltiplos instrumentos para todas as idades. Metodologia prática focada em repertório real, com aulas presenciais exclusivas em Terra Boa.",

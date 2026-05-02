@@ -56,7 +56,8 @@ export function GallerySection() {
           >
             <img 
               src={image} 
-              alt={`Galeria ${index + 1}`} 
+              alt={`Momento real de aula Magno Musica - Foto ${index + 1}`} 
+              loading="lazy"
               className="w-full h-full object-cover"
             />
             {/* Overlay sutil que some no hover */}

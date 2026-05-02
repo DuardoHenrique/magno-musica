@@ -79,7 +79,7 @@ export function HeroSection({ onOpenContact }) {
               <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent z-10" />
               <img 
                 src={magnoImage} 
-                alt="Prof. Magno tocando" 
+                alt="Professor de Música Magno Oliveira tocando instrumento em seu estúdio em Terra Boa" 
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
               <div className="absolute bottom-8 left-8 z-20 glass px-6 py-4 rounded-xl border border-white/10">

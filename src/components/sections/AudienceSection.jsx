@@ -52,7 +52,8 @@ export function AudienceSection() {
                 
                 <img 
                   src={card.image} 
-                  alt={card.title}
+                  alt={`Público alvo Magno Musica: ${card.title} - ${card.description}`}
+                  loading="lazy"
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                 />
               </div>
