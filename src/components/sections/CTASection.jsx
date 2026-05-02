@@ -3,8 +3,9 @@ import { COPY } from '@/constants';
 import { Button } from '@/components/ui/Button';
 import { ArrowRight } from 'lucide-react';
 import gsap from 'gsap';
-import ctaImage from '@/assets/cta-final.jpeg';
-import ctaImageMobile from '@/assets/cta-final-mobile.jpeg';
+// As imagens do CTA foram movidas para a pasta public/assets para evitar compressão automática do servidor
+const ctaImage = '/assets/cta-final.jpeg';
+const ctaImageMobile = '/assets/cta-final-mobile.jpeg';
 import { trackCTAClick } from '@/utils/trackingEvents';
 
 export function CTASection({ onOpenContact }) {
