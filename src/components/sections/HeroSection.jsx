@@ -10,6 +10,15 @@ import magnoImage from '@/assets/magno.webp';
 export function HeroSection({ onOpenContact, isLoading }) {
   const heroRef = useRef(null);
   const [showVideo, setShowVideo] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
 
   const handleCTAClick = () => {
     trackCTAClick('hero');
@@ -129,13 +138,23 @@ export function HeroSection({ onOpenContact, isLoading }) {
             >
               <X className="w-6 h-6" />
             </button>
-            <iframe
-              src="https://www.youtube.com/embed/ss-s3Ag8krY?autoplay=1"
-              title="Metodologia Magno Música"
-              className="w-full h-full"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            />
+            {isMobile ? (
+              <video 
+                src="/videos/magno-apresentacao.mp4" 
+                className="w-full h-full object-cover"
+                controls
+                autoPlay
+                playsInline
+              />
+            ) : (
+              <iframe
+                src="https://www.youtube.com/embed/ss-s3Ag8krY?autoplay=1"
+                title="Metodologia Magno Música"
+                className="w-full h-full"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            )}
           </div>
         </div>
       )}
