@@ -77,9 +77,9 @@ export function PhilosophySection() {
             trigger: sectionRef.current,
             pin: true,
             anticipatePin: 1,
-            scrub: 0.2,
+            scrub: isMobile ? 0.2 : 0.5,
             start: 'top top',
-            end: '+=300%', // 3 screens of scrolling duration
+            end: isMobile ? '+=300%' : '+=400%',
           }
         });
 
@@ -122,9 +122,9 @@ export function PhilosophySection() {
           scrollTrigger: {
             trigger: sectionRef.current,
             pin: true,
-            scrub: 0.2,
+            scrub: isMobile ? 0.2 : 0.5,
             start: 'top top',
-            end: '+=300%',
+            end: isMobile ? '+=300%' : '+=400%',
           }
         });
 
