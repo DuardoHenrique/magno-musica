@@ -37,7 +37,7 @@ export function CTASection({ onOpenContact }) {
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative overflow-hidden h-screen">
+    <section ref={sectionRef} className="relative overflow-hidden h-[100dvh]">
       <div className="cta-content relative w-full h-full overflow-hidden shadow-2xl flex items-start md:items-center">
         {/* Background Layers */}
         <div className="absolute inset-0 z-0">

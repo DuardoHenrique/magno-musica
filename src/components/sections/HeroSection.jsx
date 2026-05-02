@@ -35,7 +35,7 @@ export function HeroSection({ onOpenContact }) {
   }, []);
 
   return (
-    <section ref={heroRef} className="relative min-h-screen flex items-center pt-24 pb-16 overflow-hidden">
+    <section ref={heroRef} className="relative min-h-[100dvh] flex items-center pt-24 pb-16 overflow-hidden">
       {/* Background glow effects */}
       <div className="absolute top-1/4 -left-64 w-96 h-96 bg-primary/20 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-primary/10 rounded-full blur-[150px] pointer-events-none" />

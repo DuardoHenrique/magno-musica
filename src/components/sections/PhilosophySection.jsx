@@ -75,7 +75,7 @@ export function PhilosophySection() {
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: sectionRef.current,
-            pin: window.innerWidth >= 768,
+            pin: true,
             anticipatePin: 1,
             scrub: 0.5,
             start: 'top top',
@@ -121,7 +121,7 @@ export function PhilosophySection() {
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: sectionRef.current,
-            pin: window.innerWidth >= 768,
+            pin: true,
             scrub: 0.5,
             start: 'top top',
             end: '+=400%',
@@ -154,7 +154,7 @@ export function PhilosophySection() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="h-screen bg-black overflow-hidden relative">
+    <section ref={sectionRef} className="h-[100dvh] bg-black overflow-hidden relative">
       <canvas 
         ref={canvasRef} 
         role="img"
@@ -174,7 +174,7 @@ export function PhilosophySection() {
             <div 
               key={index} 
               ref={el => textRefs.current[index] = el}
-              className="absolute inset-0 flex flex-col justify-start md:justify-center items-start text-left pt-48 md:pt-0"
+              className="absolute inset-0 flex flex-col justify-start md:justify-center items-start text-left pt-40 md:pt-0"
             >
               <div 
                 className="glass group py-12 md:py-32 px-8 md:px-14 rounded-3xl border border-white/20 shadow-[0_0_50px_rgba(0,0,0,0.5)] relative overflow-hidden backdrop-blur-2xl bg-black/40 w-full"
