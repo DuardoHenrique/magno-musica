@@ -17,15 +17,24 @@ import { Footer } from '@/components/sections/Footer';
 import { GallerySection } from '@/components/sections/GallerySection';
 import { CookieBanner } from '@/components/ui/CookieBanner';
 import { useScrollTracking } from '@/hooks/useScrollTracking';
+import { Loader } from '@/components/ui/Loader';
+import { useEffect, useCallback } from 'react';
 
 function App() {
   const [isContactOpen, setIsContactOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   
+  const handleLoadingComplete = useCallback(() => {
+    setIsLoading(false);
+  }, []);
+
   // Initialize scroll tracking
   useScrollTracking();
 
   return (
-    <SmoothScrolling>
+    <>
+      <Loader isLoading={isLoading} onComplete={handleLoadingComplete} />
+      <SmoothScrolling>
       <a 
         href="#main-content" 
         className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-primary focus:text-background focus:rounded-md focus:font-bold focus:shadow-2xl"
@@ -34,7 +43,7 @@ function App() {
       </a>
       <Navbar onOpenContact={() => setIsContactOpen(true)} />
       <main id="main-content">
-        <HeroSection onOpenContact={() => setIsContactOpen(true)} />
+        <HeroSection onOpenContact={() => setIsContactOpen(true)} isLoading={isLoading} />
         <CredibilitySection />
         <AudienceSection />
         <PhilosophySection />
@@ -50,6 +59,7 @@ function App() {
       <WhatsAppButton />
       <CookieBanner />
     </SmoothScrolling>
+    </>
   );
 }
 
