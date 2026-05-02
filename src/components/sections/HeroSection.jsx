@@ -131,7 +131,7 @@ export function HeroSection({ onOpenContact, isLoading }) {
             className="absolute inset-0 bg-background/90 backdrop-blur-md" 
             onClick={() => setShowVideo(false)}
           />
-          <div className="relative w-full max-w-4xl aspect-video rounded-2xl overflow-hidden border border-white/10 shadow-2xl z-10 animate-zoomIn">
+          <div className={`relative w-full ${isMobile ? 'max-w-[85vw] aspect-[9/16]' : 'max-w-4xl aspect-video'} rounded-2xl overflow-hidden border border-white/10 shadow-2xl z-10 animate-zoomIn`}>
             <button 
               onClick={() => setShowVideo(false)}
               className="absolute top-4 right-4 z-20 p-2 rounded-full bg-black/50 text-white hover:bg-primary transition-colors"
