@@ -25,6 +25,7 @@ export function CTASection({ onOpenContact }) {
           y: 0, 
           duration: 1, 
           ease: 'power3.out',
+          force3D: true,
           scrollTrigger: {
             trigger: sectionRef.current,
             start: 'top 80%',
@@ -45,11 +46,21 @@ export function CTASection({ onOpenContact }) {
             src={ctaImage} 
             alt="Professor Magno Oliveira segurando instrumento em fundo premium" 
             className="hidden md:block w-full h-full object-cover"
+            style={{ 
+              imageRendering: '-webkit-optimize-contrast',
+              transform: 'translateZ(0)',
+              backfaceVisibility: 'hidden'
+            }}
           />
           <img 
             src={ctaImageMobile} 
             alt="Professor Magno Oliveira segurando instrumento em fundo premium - versão mobile" 
             className="block md:hidden w-full h-full object-cover"
+            style={{ 
+              imageRendering: '-webkit-optimize-contrast',
+              transform: 'translateZ(0)',
+              backfaceVisibility: 'hidden'
+            }}
           />
           {/* Gradiente apenas na direita para legibilidade da copy, esquerda nítida para o personagem */}
           <div className="hidden md:block absolute inset-0 bg-gradient-to-l from-black/90 via-black/40 to-transparent" />
