@@ -75,7 +75,7 @@ export function PhilosophySection() {
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: sectionRef.current,
-            pin: true,
+            pin: window.innerWidth >= 768,
             anticipatePin: 1,
             scrub: 0.5,
             start: 'top top',
@@ -121,7 +121,7 @@ export function PhilosophySection() {
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: sectionRef.current,
-            pin: true,
+            pin: window.innerWidth >= 768,
             scrub: 0.5,
             start: 'top top',
             end: '+=400%',

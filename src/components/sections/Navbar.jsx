@@ -37,10 +37,11 @@ export function Navbar({ onOpenContact }) {
         </a>
 
         {/* CTA */}
-        <div className="hidden md:block">
+        <div className="block">
           <Button 
             variant={isScrolled ? 'primary' : 'secondary'} 
             size="sm"
+            className="text-xs md:text-sm px-4 md:px-6 h-10 md:h-11"
             onClick={handleContactClick}
           >
             Quero começar

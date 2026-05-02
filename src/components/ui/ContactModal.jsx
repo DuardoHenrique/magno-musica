@@ -52,7 +52,12 @@ export function ContactModal({ isOpen, onClose }) {
     };
 
     if (isOpen) {
-      document.body.style.overflow = 'hidden';
+      // iOS Scroll Lock fix
+      const scrollY = window.scrollY;
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.width = '100%';
+      
       window.addEventListener('keydown', handleKeyDown);
       // Track modal open
       trackModalOpen('contact_form');
@@ -61,7 +66,12 @@ export function ContactModal({ isOpen, onClose }) {
         document.getElementById('name')?.focus();
       }, 100);
     } else {
-      document.body.style.overflow = '';
+      const scrollY = document.body.style.top;
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
+      window.scrollTo(0, parseInt(scrollY || '0') * -1);
+
       window.removeEventListener('keydown', handleKeyDown);
       // Reset state when closing
       setTimeout(() => {
@@ -73,7 +83,11 @@ export function ContactModal({ isOpen, onClose }) {
       }, 300);
     }
     return () => {
-      document.body.style.overflow = '';
+      const scrollY = document.body.style.top;
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
+      if (scrollY) window.scrollTo(0, parseInt(scrollY || '0') * -1);
       window.removeEventListener('keydown', handleKeyDown);
     };
   }, [isOpen, onClose]);
