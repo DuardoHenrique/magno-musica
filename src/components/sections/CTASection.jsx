@@ -5,9 +5,15 @@ import { ArrowRight } from 'lucide-react';
 import gsap from 'gsap';
 import ctaImage from '@/assets/cta-final.jpeg';
 import ctaImageMobile from '@/assets/cta-final-mobile.jpeg';
+import { trackCTAClick } from '@/utils/trackingEvents';
 
 export function CTASection({ onOpenContact }) {
   const sectionRef = useRef(null);
+
+  const handleCTAClick = () => {
+    trackCTAClick('cta_final');
+    onOpenContact();
+  };
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -66,7 +72,7 @@ export function CTASection({ onOpenContact }) {
               <Button 
                 size="lg" 
                 className="w-full max-w-xl text-xl group px-12 h-20 shadow-2xl shadow-primary/30"
-                onClick={onOpenContact}
+                onClick={handleCTAClick}
               >
                 {COPY.cta.button}
                 <ArrowRight className="ml-4 w-8 h-8 transition-transform group-hover:translate-x-2" />

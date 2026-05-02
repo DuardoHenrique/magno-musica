@@ -1,11 +1,18 @@
+import { useState, useEffect } from 'react';
 import { COPY } from '@/constants';
 import { useScrollPosition } from '@/hooks/useScrollPosition';
 import { Button } from '@/components/ui/Button';
 import { cn } from '@/utils/cn';
+import { trackCTAClick } from '@/utils/trackingEvents';
 
 export function Navbar({ onOpenContact }) {
   const scrollY = useScrollPosition();
   const isScrolled = scrollY > 50;
+
+  const handleContactClick = () => {
+    trackCTAClick('navbar');
+    onOpenContact();
+  };
 
   return (
     <nav
@@ -34,7 +41,7 @@ export function Navbar({ onOpenContact }) {
           <Button 
             variant={isScrolled ? 'primary' : 'secondary'} 
             size="sm"
-            onClick={onOpenContact}
+            onClick={handleContactClick}
           >
             Quero começar
           </Button>

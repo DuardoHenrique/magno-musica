@@ -3,12 +3,18 @@ import { COPY } from '@/constants';
 import { Button } from '@/components/ui/Button';
 import { ArrowRight, Play, X } from 'lucide-react';
 import gsap from 'gsap';
+import { trackCTAClick } from '@/utils/trackingEvents';
 
 import magnoImage from '@/assets/magno.webp';
 
 export function HeroSection({ onOpenContact }) {
   const heroRef = useRef(null);
   const [showVideo, setShowVideo] = useState(false);
+
+  const handleCTAClick = () => {
+    trackCTAClick('hero');
+    onOpenContact();
+  };
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -56,7 +62,7 @@ export function HeroSection({ onOpenContact }) {
               <Button 
                 size="lg" 
                 className="group"
-                onClick={onOpenContact}
+                onClick={handleCTAClick}
               >
                 {COPY.hero.cta}
                 <ArrowRight className="ml-2 w-5 h-5 transition-transform group-hover:translate-x-1" />

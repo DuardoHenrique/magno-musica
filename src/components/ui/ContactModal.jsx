@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
 import { Button } from './Button';
 import { cn } from '@/utils/cn';
+import { trackModalOpen, trackFormSubmit, trackLeadCaptured } from '@/utils/trackingEvents';
 
 const INSTRUMENTS = [
   'Violão',
@@ -53,6 +54,8 @@ export function ContactModal({ isOpen, onClose }) {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
       window.addEventListener('keydown', handleKeyDown);
+      // Track modal open
+      trackModalOpen('contact_form');
       // Focus first input
       setTimeout(() => {
         document.getElementById('name')?.focus();
@@ -96,27 +99,34 @@ export function ContactModal({ isOpen, onClose }) {
     if (value.length === 15) setErrors((prev) => ({ ...prev, whatsapp: null }));
   };
 
-  const validate = () => {
-    const newErrors = {};
-    if (!name.trim()) newErrors.name = 'O nome é obrigatório.';
-    if (whatsapp.length < 15) newErrors.whatsapp = 'Digite um WhatsApp válido.';
-    if (!instrument) newErrors.instrument = 'Selecione um instrumento.';
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!validate()) return;
+    const newErrors = {};
+    if (!name) newErrors.name = 'Nome é obrigatório';
+    if (!whatsapp) newErrors.whatsapp = 'WhatsApp é obrigatório';
+    if (!instrument) newErrors.instrument = 'Selecione um instrumento';
 
-    // Em breve será automatizado. Por enquanto, apenas feedback visual.
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      trackFormSubmit('error');
+      return;
+    }
+
+    // Success flow
     setSubmitted(true);
+    trackFormSubmit('success');
+    trackLeadCaptured();
     
-    // Fecha o modal e volta para o topo após 5 segundos
+    // Redirect to WhatsApp after 2 seconds
     setTimeout(() => {
+      const message = encodeURIComponent(`Olá Professor Magno! Meu nome é ${name}. Tenho interesse em aulas de ${instrument}.`);
+      window.open(`https://wa.me/5511999999999?text=${message}`, '_blank');
       onClose();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }, 5000);
+      setSubmitted(false);
+      setName('');
+      setWhatsapp('');
+      setInstrument('');
+    }, 2000);
   };
 
   return (

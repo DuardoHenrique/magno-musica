@@ -15,9 +15,14 @@ import { ContactSection } from '@/components/sections/ContactSection';
 import { Footer } from '@/components/sections/Footer';
 
 import { GallerySection } from '@/components/sections/GallerySection';
+import { CookieBanner } from '@/components/ui/CookieBanner';
+import { useScrollTracking } from '@/hooks/useScrollTracking';
 
 function App() {
   const [isContactOpen, setIsContactOpen] = useState(false);
+  
+  // Initialize scroll tracking
+  useScrollTracking();
 
   return (
     <SmoothScrolling>
@@ -43,6 +48,7 @@ function App() {
       <Footer />
       <ContactModal isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} />
       <WhatsAppButton />
+      <CookieBanner />
     </SmoothScrolling>
   );
 }
