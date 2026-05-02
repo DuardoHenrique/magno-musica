@@ -79,7 +79,7 @@ export function PhilosophySection() {
             anticipatePin: 1,
             scrub: isMobile ? 0.2 : 0.5,
             start: 'top top',
-            end: isMobile ? '+=300%' : '+=400%',
+            end: isMobile ? '+=200%' : '+=400%',
           }
         });
 
@@ -124,7 +124,7 @@ export function PhilosophySection() {
             pin: true,
             scrub: isMobile ? 0.2 : 0.5,
             start: 'top top',
-            end: isMobile ? '+=300%' : '+=400%',
+            end: isMobile ? '+=200%' : '+=400%',
           }
         });
 
