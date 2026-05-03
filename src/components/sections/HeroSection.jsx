@@ -108,16 +108,39 @@ export function HeroSection({ onOpenContact, isLoading }) {
 
           {/* Visual Anchor */}
           <div className="hero-image-wrap opacity-0 relative">
-            <div className="aspect-[4/5] rounded-2xl overflow-hidden relative group">
-              <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent z-10" />
+            <div 
+              className="aspect-[4/5] rounded-2xl overflow-hidden relative group cursor-pointer border border-white/5"
+              onClick={() => setShowVideo(true)}
+            >
+              <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent z-10" />
+              
+              {/* Imagem de base (visto antes do hover ou carregamento) */}
               <img 
                 src={magnoImage} 
-                alt="Professor de Música Magno Oliveira tocando instrumento em seu estúdio em Terra Boa" 
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                alt="Professor de Música Magno Oliveira" 
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
               />
+
+              {/* Preview em vídeo - Muted & Loop */}
+              <video 
+                src="/videos/magno-apresentacao.mp4" 
+                autoPlay 
+                muted 
+                loop 
+                playsInline
+                className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-700"
+              />
+
+              {/* Overlay de Play no Hover */}
+              <div className="absolute inset-0 flex items-center justify-center z-20 opacity-0 group-hover:opacity-100 transition-all duration-500 scale-90 group-hover:scale-100">
+                <div className="w-16 h-16 rounded-full bg-primary/90 flex items-center justify-center backdrop-blur-sm shadow-[0_0_30px_rgba(var(--color-primary-rgb),0.5)]">
+                  <Play className="w-7 h-7 text-black fill-current ml-1" />
+                </div>
+              </div>
+
               <div className="absolute bottom-8 left-8 z-20 glass px-6 py-4 rounded-xl border border-white/10">
-                <p className="font-display font-bold text-2xl text-primary">100%</p>
-                <p className="text-sm text-text-muted">Foco em repertório prático</p>
+                <p className="font-display font-bold text-2xl text-primary">Assista</p>
+                <p className="text-sm text-text-muted">Conheça a metodologia</p>
               </div>
             </div>
           </div>
@@ -128,33 +151,23 @@ export function HeroSection({ onOpenContact, isLoading }) {
       {showVideo && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
           <div 
-            className="absolute inset-0 bg-background/90 backdrop-blur-md" 
+            className="absolute inset-0 bg-background/95 backdrop-blur-xl" 
             onClick={() => setShowVideo(false)}
           />
-          <div className={`relative w-full ${isMobile ? 'max-w-[85vw] aspect-[9/16]' : 'max-w-4xl aspect-video'} rounded-2xl overflow-hidden border border-white/10 shadow-2xl z-10 animate-zoomIn`}>
+          <div className={`relative w-full ${isMobile ? 'max-w-[85vw] aspect-[9/16]' : 'max-w-5xl aspect-video'} rounded-2xl overflow-hidden border border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.5)] z-10 animate-zoomIn bg-black`}>
             <button 
               onClick={() => setShowVideo(false)}
-              className="absolute top-4 right-4 z-20 p-2 rounded-full bg-black/50 text-white hover:bg-primary transition-colors"
+              className="absolute top-4 right-4 z-20 p-2 rounded-full bg-black/50 text-white hover:bg-primary hover:text-black transition-all"
             >
               <X className="w-6 h-6" />
             </button>
-            {isMobile ? (
-              <video 
-                src="/videos/magno-apresentacao.mp4" 
-                className="w-full h-full object-cover"
-                controls
-                autoPlay
-                playsInline
-              />
-            ) : (
-              <iframe
-                src="https://www.youtube.com/embed/ss-s3Ag8krY?autoplay=1"
-                title="Metodologia Magno Música"
-                className="w-full h-full"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              />
-            )}
+            <video 
+              src="/videos/magno-apresentacao.mp4" 
+              className="w-full h-full object-contain"
+              controls
+              autoPlay
+              playsInline
+            />
           </div>
         </div>
       )}
