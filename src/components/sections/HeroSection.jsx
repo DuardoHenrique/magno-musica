@@ -123,7 +123,7 @@ export function HeroSection({ onOpenContact, isLoading }) {
 
               {/* Preview em vídeo - Muted & Loop */}
               <video 
-                src="/videos/magno-apresentacao-comprimido.mp4" 
+                src="/videos/apresentacao-comprimida.mp4" 
                 autoPlay 
                 muted 
                 loop 
@@ -162,7 +162,7 @@ export function HeroSection({ onOpenContact, isLoading }) {
               <X className="w-6 h-6" />
             </button>
             <video 
-              src="/videos/magno-apresentacao-comprimido.mp4" 
+              src="/videos/apresentacao-comprimida.mp4" 
               className="w-full h-full object-contain"
               controls
               autoPlay
