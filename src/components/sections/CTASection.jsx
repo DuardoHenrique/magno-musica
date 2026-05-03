@@ -18,34 +18,46 @@ export function CTASection({ onOpenContact }) {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Animação do container (sem scale para evitar blur)
-      gsap.fromTo('.cta-content',
-        { opacity: 0, y: 40 },
-        { 
-          opacity: 1, 
-          y: 0, 
-          duration: 1.2, 
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: 'top 80%',
-          }
-        }
-      );
+      const mm = gsap.matchMedia();
 
-      // Animação da imagem (o scale acontece aqui, de forma isolada)
-      gsap.fromTo('.cta-bg-image',
-        { scale: 1.1 },
-        { 
-          scale: 1, 
-          duration: 2, 
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: 'top 80%',
+      // Animações apenas para Desktop (acima de 768px)
+      mm.add("(min-width: 768px)", () => {
+        // Animação do container
+        gsap.fromTo('.cta-content',
+          { opacity: 0, y: 40 },
+          { 
+            opacity: 1, 
+            y: 0, 
+            duration: 1.2, 
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: 'top 80%',
+            }
           }
-        }
-      );
+        );
+
+        // Animação da imagem (zoom-out suave)
+        gsap.fromTo('.cta-bg-image',
+          { scale: 1.1 },
+          { 
+            scale: 1, 
+            duration: 2, 
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: 'top 80%',
+            }
+          }
+        );
+      });
+
+      // No mobile (abaixo de 768px), o banner fica estático
+      mm.add("(max-width: 767px)", () => {
+        gsap.set('.cta-content', { opacity: 1, y: 0 });
+        gsap.set('.cta-bg-image', { scale: 1 });
+      });
+
     }, sectionRef);
 
     return () => ctx.revert();
