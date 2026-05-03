@@ -92,7 +92,7 @@ export function PhilosophySection() {
         }, 0);
 
         // Animate the texts
-        const startOffset = isMobile ? 0.15 : 0;
+        const startOffset = isMobile ? 0.1 : 0;
         const stepDuration = (1 - startOffset) / COPY.philosophy.steps.length;
         
         textRefs.current.forEach((textRef, i) => {
@@ -130,7 +130,7 @@ export function PhilosophySection() {
         });
 
         // Simple opacity fade without movement
-        const startOffset = isMobile ? 0.15 : 0;
+        const startOffset = isMobile ? 0.1 : 0;
         const stepDuration = (1 - startOffset) / COPY.philosophy.steps.length;
 
         textRefs.current.forEach((textRef, i) => {
