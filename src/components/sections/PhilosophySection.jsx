@@ -92,11 +92,12 @@ export function PhilosophySection() {
         }, 0);
 
         // Animate the texts
-        const stepDuration = 1 / COPY.philosophy.steps.length;
+        const startOffset = isMobile ? 0.15 : 0;
+        const stepDuration = (1 - startOffset) / COPY.philosophy.steps.length;
         
         textRefs.current.forEach((textRef, i) => {
-          const enterTime = i * stepDuration;
-          const leaveTime = enterTime + stepDuration * 0.7; // Fade out before next starts
+          const enterTime = startOffset + (i * stepDuration);
+          const leaveTime = enterTime + (stepDuration * 0.7); // Fade out before next starts
           
           // Initial state
           gsap.set(textRef, { autoAlpha: 0, y: 50 });
@@ -129,10 +130,12 @@ export function PhilosophySection() {
         });
 
         // Simple opacity fade without movement
-        const stepDuration = 1 / COPY.philosophy.steps.length;
+        const startOffset = isMobile ? 0.15 : 0;
+        const stepDuration = (1 - startOffset) / COPY.philosophy.steps.length;
+
         textRefs.current.forEach((textRef, i) => {
-          const enterTime = i * stepDuration;
-          const leaveTime = enterTime + stepDuration * 0.7;
+          const enterTime = startOffset + (i * stepDuration);
+          const leaveTime = enterTime + (stepDuration * 0.7);
           
           gsap.set(textRef, { autoAlpha: 0, y: 0 });
           tl.to(textRef, { autoAlpha: 1, duration: stepDuration * 0.2 }, enterTime);
