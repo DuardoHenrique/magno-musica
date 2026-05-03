@@ -120,17 +120,7 @@ export function HeroSection({ onOpenContact, isLoading }) {
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
               />
 
-              {/* Preview em vídeo - apenas Desktop para evitar disparos no mobile */}
-              {!isMobile && (
-                <video 
-                  src="/videos/apresentacao-comprimida.mp4" 
-                  autoPlay 
-                  muted 
-                  loop 
-                  playsInline
-                  className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-700"
-                />
-              )}
+
             </div>
           </div>
           
