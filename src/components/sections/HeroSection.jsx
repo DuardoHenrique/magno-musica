@@ -109,39 +109,28 @@ export function HeroSection({ onOpenContact, isLoading }) {
           {/* Visual Anchor */}
           <div className="hero-image-wrap opacity-0 relative">
             <div 
-              className="aspect-[4/5] rounded-2xl overflow-hidden relative group cursor-pointer border border-white/5"
-              onClick={() => setShowVideo(true)}
+              className="aspect-[4/5] rounded-2xl overflow-hidden relative group border border-white/5"
             >
               <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent z-10" />
               
-              {/* Imagem de base (visto antes do hover ou carregamento) */}
+              {/* Imagem de base */}
               <img 
                 src={magnoImage} 
                 alt="Professor de Música Magno Oliveira" 
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
               />
 
-              {/* Preview em vídeo - Muted & Loop */}
-              <video 
-                src="/videos/apresentacao-comprimida.mp4" 
-                autoPlay 
-                muted 
-                loop 
-                playsInline
-                className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-700"
-              />
-
-              {/* Overlay de Play no Hover */}
-              <div className="absolute inset-0 flex items-center justify-center z-20 opacity-0 group-hover:opacity-100 transition-all duration-500 scale-90 group-hover:scale-100">
-                <div className="w-16 h-16 rounded-full bg-primary/90 flex items-center justify-center backdrop-blur-sm shadow-[0_0_30px_rgba(var(--color-primary-rgb),0.5)]">
-                  <Play className="w-7 h-7 text-black fill-current ml-1" />
-                </div>
-              </div>
-
-              <div className="absolute bottom-8 left-8 z-20 glass px-6 py-4 rounded-xl border border-white/10">
-                <p className="font-display font-bold text-2xl text-primary">Assista</p>
-                <p className="text-sm text-text-muted">Conheça a metodologia</p>
-              </div>
+              {/* Preview em vídeo - apenas Desktop para evitar disparos no mobile */}
+              {!isMobile && (
+                <video 
+                  src="/videos/apresentacao-comprimida.mp4" 
+                  autoPlay 
+                  muted 
+                  loop 
+                  playsInline
+                  className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-700"
+                />
+              )}
             </div>
           </div>
           
